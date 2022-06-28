@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { globalBaseStyles } from 'styles';
+import Spiner from 'components/common/Spiner';
+// import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={globalBaseStyles}>
+      <CssBaseline />
+      <Suspense fallback={<Spiner isFone />}>
+        <App />
+      </Suspense>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

@@ -1,13 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC } from 'react';
+import { observer } from 'mobx-react-lite';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { routes } from 'routers';
+import { useMediaQuery } from '@mui/material';
+import ScreenFormat from 'components/common/StubsAndBugs/ScreenFormat';
+import Home from 'views/Home';
+import PrivateRoute from 'components/common/PrivateRoute';
+import Login from 'views/Login';
+import LoginPrivateRoute from 'components/common/PrivateRoute/LoginPrivateRoute';
 
-function App() {
+const App: FC = () => {
+  const isNonScreen = useMediaQuery('(max-width:319px)');
+
+  if (isNonScreen) {
+    return <ScreenFormat />;
+  }
+
   return (
-    <div className="App">
-
-    </div>
+      <BrowserRouter>
+        <Routes>
+          <Route
+              path={routes.home}
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+          />
+          <Route
+              path={routes.login}
+              element={
+                <LoginPrivateRoute>
+                  <Login />
+                </LoginPrivateRoute>
+              }
+          />
+        </Routes>
+      </BrowserRouter>
   );
-}
+};
 
-export default App;
+export default observer(App);
