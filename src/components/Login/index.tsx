@@ -68,13 +68,12 @@ const LoginPage: FC = () => {
     usersService.login(data.email, data.password);
   };
   
-  if(isCallDone && !error) {
+  if(isCallDone && !error && currentUser.email) {
     return <Navigate to={routes.home} />
   } 
-  console.log(isCallDone, error);
+
   return (
     <Fragment>
-      {(isCallDone && !error) ?? <Navigate to={routes.home} />}
       <Paper elevation={10} className={classes.paper}>
         <Box p={5}>
           <Typography
