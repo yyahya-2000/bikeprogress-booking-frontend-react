@@ -23,7 +23,7 @@ declare module '@mui/material/styles' {
 export const globalBaseStyles = createTheme({
   palette: {
     primary: {
-      main: '#00519E',
+      main: '#0065FF',
       dark: '#213E76',
     },
     secondary: {

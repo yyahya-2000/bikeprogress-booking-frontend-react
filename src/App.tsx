@@ -8,6 +8,7 @@ import Home from 'views/Home';
 import PrivateRoute from 'components/common/PrivateRoute';
 import Login from 'views/Login';
 import LoginPrivateRoute from 'components/common/PrivateRoute/LoginPrivateRoute';
+import Users from 'views/Users';
 
 const App: FC = () => {
   const isNonScreen = useMediaQuery('(max-width:319px)');
@@ -17,26 +18,34 @@ const App: FC = () => {
   }
 
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route
-              path={routes.home}
-              element={
-                <PrivateRoute>
-                  <Home />
-                </PrivateRoute>
-              }
-          />
-          <Route
-              path={routes.login}
-              element={
-                <LoginPrivateRoute>
-                  <Login />
-                </LoginPrivateRoute>
-              }
-          />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={routes.home}
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.users}
+          element={
+            <PrivateRoute>
+              <Users />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.login}
+          element={
+            <LoginPrivateRoute>
+              <Login />
+            </LoginPrivateRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

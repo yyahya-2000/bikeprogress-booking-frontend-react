@@ -1,11 +1,12 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { UserItem } from 'models/types';
 import { defaultUser, userApiUrlS } from './users.data';
 //import { format } from "date-fns";
 
 class UsersService {
   public currentUser: UserItem = defaultUser;
+  public users: UserItem[] | undefined = undefined;
   public isCallDone = false;
   public error: string | undefined = undefined;
   constructor() {
@@ -31,23 +32,17 @@ class UsersService {
     }
   }
 
-  async login(email: string, password: string) {
+  async fetchAllUsers() {
     try {
-      runInAction(() => (this.isCallDone = false));
-      const params = new FormData();
-      params.append('email', email);
-      params.append('password', password);
-
-      const result = await axios.post(userApiUrlS.login, params);
+      const result = await axios.get(userApiUrlS.allUsers);
       if (result.status !== 200) {
-        runInAction(() => (this.error = 'Неправильный логин или пароль'));
         return console.log('result', result);
       }
+      runInAction(() => {
+        this.users = result.data;
+      });
     } catch (error) {
-      runInAction(() => (this.error = 'Неправильный логин или пароль'));
       console.log(error);
-    } finally {
-      runInAction(() => (this.isCallDone = true));
     }
   }
 

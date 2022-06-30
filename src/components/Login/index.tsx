@@ -19,14 +19,14 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import { usersService } from 'services/users/users.service';
+import { authService } from 'services/auth/auth.service';
 import { authValidations } from 'enums/authorization';
 import { Navigate } from 'react-router-dom';
 import { routes } from 'routers';
 
 const LoginPage: FC = () => {
   const classes = useLoginStyle();
-  const { error, isCallDone, currentUser } = usersService;
+  const { error, isCallDone } = authService;
   const [frontError, setFrontError] = useState('');
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -65,12 +65,12 @@ const LoginPage: FC = () => {
       setFrontError(authValidations.errorAnswer);
       return;
     }
-    usersService.login(data.email, data.password);
+    authService.login(data.email, data.password);
   };
-  
-  if(isCallDone && !error && currentUser.email) {
-    return <Navigate to={routes.home} />
-  } 
+
+  if (isCallDone && !error) {
+    return <Navigate to={routes.home} />;
+  }
 
   return (
     <Fragment>

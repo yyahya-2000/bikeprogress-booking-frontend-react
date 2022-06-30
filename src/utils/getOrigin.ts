@@ -4,9 +4,9 @@
 const getOrigin = (): string => {
   let origin = 'http://localhost:8000/';
 
-  // if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  //   origin = 'https://hseportal.infostrategic.com/';
-  // }
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    origin = 'http://booking.keep-calm.ru/server/';
+  }
 
   return origin;
 };

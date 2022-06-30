@@ -12,6 +12,7 @@ export type ContainerProps = {
 };
 
 export type UserItem = {
+  id: string;
   firstname: string;
   lastname: string;
   password: string;
@@ -43,4 +44,15 @@ export type AuthValidations = {
     };
   };
   errorAnswer: string;
+};
+
+export type MenuItem = {
+  text: string;
+  icon: any;
+  navigationLink: string;
+};
+
+export type UsersTable = {
+  id: string;
+  user: string;
 };

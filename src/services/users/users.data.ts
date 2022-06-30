@@ -2,6 +2,7 @@ import { UserItem } from 'models/types';
 import getOrigin from 'utils/getOrigin';
 
 export const defaultUser: UserItem = {
+  id: '',
   firstname: '',
   lastname: '',
   password: '',
@@ -14,5 +15,5 @@ export const defaultUser: UserItem = {
 
 export const userApiUrlS = {
   currentUser: getOrigin() + 'api/user',
-  login: getOrigin() + 'api/login',
+  allUsers: getOrigin() + 'api/users',
 };
