@@ -5,7 +5,7 @@ const getOrigin = (): string => {
   let origin = 'http://localhost:8000/';
 
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    origin = 'http://booking.keep-calm.ru/server/';
+    origin = 'http://5.101.51.143:7777/api.booking.keep-calm.ru/';
   }
 
   return origin;
