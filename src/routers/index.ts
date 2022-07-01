@@ -4,5 +4,8 @@ export const routes = {
   contacts: '/contacts',
   users: '/users',
   page: '/page',
-  help: '/help'
+  help: '/help',
+  editUser: '/users/edit',
+  previewUser: '/users/view',
+  addUser: '/users/add',
 };

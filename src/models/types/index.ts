@@ -43,6 +43,12 @@ export type AuthValidations = {
       invalidMessage: string;
     };
   };
+  phoneNumber: {
+    pattern: {
+      regex: RegExp;
+      invalidMessage: string;
+    };
+  };
   errorAnswer: string;
 };
 
@@ -55,4 +61,12 @@ export type MenuItem = {
 export type UsersTable = {
   id: string;
   user: string;
+};
+
+export type ConfirmDialogProps = {
+  title: string;
+  children: React.ReactNode;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onConfirm: () => void;
 };

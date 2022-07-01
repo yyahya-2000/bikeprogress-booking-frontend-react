@@ -16,4 +16,5 @@ export const defaultUser: UserItem = {
 export const userApiUrlS = {
   currentUser: getOrigin() + 'api/user',
   allUsers: getOrigin() + 'api/users',
+  addUser: getOrigin() + 'api/user/add'
 };

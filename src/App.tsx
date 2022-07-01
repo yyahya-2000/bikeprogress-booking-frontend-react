@@ -9,6 +9,9 @@ import PrivateRoute from 'components/common/PrivateRoute';
 import Login from 'views/Login';
 import LoginPrivateRoute from 'components/common/PrivateRoute/LoginPrivateRoute';
 import Users from 'views/Users';
+import AddUser from 'views/Users/AddUser';
+import EditUser from 'views/Users/EditUser';
+import PreviewUser from 'views/Users/PreviewUser';
 
 const App: FC = () => {
   const isNonScreen = useMediaQuery('(max-width:319px)');
@@ -33,6 +36,30 @@ const App: FC = () => {
           element={
             <PrivateRoute>
               <Users />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.addUser}
+          element={
+            <PrivateRoute>
+              <AddUser />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.editUser}
+          element={
+            <PrivateRoute>
+              <EditUser />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.previewUser}
+          element={
+            <PrivateRoute>
+              <PreviewUser />
             </PrivateRoute>
           }
         />
