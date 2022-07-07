@@ -107,6 +107,49 @@ class UsersService {
     }
   }
 
+  async adminReastPassword(id: string, newPassword: string) {
+    try {
+      const params = new FormData();
+      params.append('id', id);
+      params.append('new-password', newPassword);
+
+      const result = await axios.post(userApiUrlS.adminResetPassword, params);
+      if (result.status !== 200) {
+        return console.log('result', result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async editUser(
+    id: string,
+    firstname: string,
+    lastname: string,
+    phoneNumber: string,
+    email: string,
+    position: number
+  ) {
+    try {
+      const params = new FormData();
+      params.append('id', id);
+      params.append('firstname', firstname);
+      params.append('lastname', lastname);
+      params.append('phone-number', phoneNumber);
+      params.append('email', email);
+      params.append('position', position === 0 ? 'Менеджер' : 'Администратор');
+      console.log(id, firstname, lastname, phoneNumber, email, position);
+
+      const result = await axios.post(userApiUrlS.editUser, params);
+      console.log(result);
+      if (result.status !== 200) {
+        return console.log('result', result);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   resetParams() {
     runInAction(() => (this.isCallDone = false));
   }

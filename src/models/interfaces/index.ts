@@ -17,3 +17,11 @@ export interface IAdminChangePasswordState {
   password: string;
   passwordConfirmation: string;
 }
+
+export interface IEditUserState {
+  firstname: string;
+  lastname: string;
+  phoneNumber: string;
+  email: string;
+  position: number;
+}

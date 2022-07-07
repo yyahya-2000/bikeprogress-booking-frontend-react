@@ -12,6 +12,7 @@ import Users from 'views/Users';
 import AddUser from 'views/Users/AddUser';
 import EditUser from 'views/Users/EditUser';
 import PreviewUser from 'views/Users/PreviewUser';
+import AdminChangePassword from 'views/Users/EditUser/ChangePassword';
 
 const App: FC = () => {
   const isNonScreen = useMediaQuery('(max-width:319px)');
@@ -52,6 +53,14 @@ const App: FC = () => {
           element={
             <PrivateRoute>
               <EditUser />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.adminChangePassword}
+          element={
+            <PrivateRoute>
+              <AdminChangePassword />
             </PrivateRoute>
           }
         />
