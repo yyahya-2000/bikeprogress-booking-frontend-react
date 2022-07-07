@@ -12,3 +12,8 @@ export interface IAddUserState {
   password: string;
   passwordConfirmation: string;
 }
+
+export interface IAdminChangePasswordState {
+  password: string;
+  passwordConfirmation: string;
+}

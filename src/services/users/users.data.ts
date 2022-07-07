@@ -7,14 +7,15 @@ export const defaultUser: UserItem = {
   lastname: '',
   password: '',
   email: '',
-  phoneNumebr: '',
+  phone_number: '',
   position: '',
-  createdAt: undefined,
-  updatedAt: undefined,
+  created_at: undefined,
+  updated_at: undefined,
 };
 
 export const userApiUrlS = {
   currentUser: getOrigin() + 'api/user',
   allUsers: getOrigin() + 'api/users',
-  addUser: getOrigin() + 'api/user/add'
+  addUser: getOrigin() + 'api/user/add',
+  userById: getOrigin() + 'api/user/read'
 };

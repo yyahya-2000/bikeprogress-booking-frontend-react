@@ -8,4 +8,5 @@ export const routes = {
   editUser: '/users/edit',
   previewUser: '/users/view',
   addUser: '/users/add',
+  adminChangePassword: '/users/edit/change-password',
 };

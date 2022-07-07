@@ -17,10 +17,10 @@ export type UserItem = {
   lastname: string;
   password: string;
   email: string;
-  phoneNumebr: string;
+  phone_number: string;
   position: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  created_at?: Date;
+  updated_at?: Date;
 };
 
 export type AuthValidations = {

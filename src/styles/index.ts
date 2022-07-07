@@ -33,12 +33,12 @@ export const globalBaseStyles = createTheme({
       main: '#57AB27',
     },
     text: {
-      primary: '#4D4D4D',
+      primary: '#373737',
       secondary: '#696A6D',
     },
     grey: {
       50: '#F0F2F4',
-      100: '#D1D3D5',
+      100: '#BAC5D0',
     },
   },
   breakpoints: {

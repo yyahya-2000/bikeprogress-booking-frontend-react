@@ -23,7 +23,6 @@ import useAddUserStyle from './AddUser.styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { usersService } from 'services/users/users.service';
-import { notifyListeners } from 'mobx/dist/internal';
 
 const AddUserPage: FC = () => {
   const classes = useAddUserStyle();

@@ -11,6 +11,9 @@ class UsersService {
   public isCallDone = false;
   public usersFetched = false;
   public error: string | undefined = undefined;
+  public previewUser: UserItem = defaultUser;
+  public previewLoading = false;
+
   constructor() {
     makeAutoObservable(this);
     axios.defaults.withCredentials = true;
@@ -55,6 +58,26 @@ class UsersService {
       console.log(error);
     } finally {
       runInAction(() => (this.usersFetched = true));
+    }
+  }
+
+  async fetchUserById(id: string) {
+    try {
+      runInAction(() => (this.previewLoading = false));
+      const params = new FormData();
+      params.append('id', id);
+
+      const result = await axios.post(userApiUrlS.userById, params);
+      if (result.status !== 200) {
+        return console.log('result', result);
+      }
+      runInAction(() => {
+        this.previewUser = result.data[0];
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      runInAction(() => (this.previewLoading = true));
     }
   }
 
