@@ -24,9 +24,7 @@ import { UsersTable } from 'models/types';
 const UsersPage: FC = () => {
   const classes = useUsersStyle();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [idUserToDelete, setIdUserToDelete] = useState<undefined | GridRowId>(
-    undefined
-  );
+  const [idUserToDelete, setIdUserToDelete] = useState<GridRowId>();
   const navigate = useNavigate();
   const [pageSize, setPageSize] = useState(5);
   const { usersTable, usersFetched } = usersService;
@@ -38,12 +36,14 @@ const UsersPage: FC = () => {
   useEffect(() => {
     setRows(usersTable.map((row) => row));
   }, [usersTable]);
-  const deleteUser = useCallback(
-    () => () => {
-      setTimeout(() => {
-        console.log('entered');
 
-        setRows(rows.filter((row) => row.id !== idUserToDelete));
+  const deleteUser = useCallback(
+    (idUserToDelete_: GridRowId | undefined) => () => {
+      setTimeout(() => {
+        if (idUserToDelete_) {
+          usersService.deleteUserById(idUserToDelete_.toString());
+          usersService.fetchAllUsers();
+        }
       });
     },
     []
@@ -67,20 +67,6 @@ const UsersPage: FC = () => {
     );
   };
 
-  // const deleteUser = () => {
-  //   console.log(idUserToDelete);
-  // };
-
-  // const editUser = useCallback(
-  //   (id: GridRowId) => () => {
-  //     // setTimeout(() => {
-  //     //   setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-  //     // });
-  //   },
-  //   []
-  // );
-
-  // Otherwise filter will be applied on fields such as the hidden column id
   const columns = [
     { field: 'id', headerName: 'ID', width: 100 },
     { field: 'user', headerName: 'ФАМИЛИЯ И.', flex: 1 },
@@ -146,7 +132,7 @@ const UsersPage: FC = () => {
         title='Удаление пользователя...'
         open={isDialogOpen}
         setOpen={setIsDialogOpen}
-        onConfirm={deleteUser()}
+        onConfirm={deleteUser(idUserToDelete)}
       >
         Вы уверены, что хотите удалить этого пользователя?
       </ConfirmDialog>
