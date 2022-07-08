@@ -66,7 +66,8 @@ const EditUserPage: FC = () => {
         data.phoneNumber,
         data.email,
         data.position
-      );  
+      );
+      usersService.fetchUserById(idUser);
       navigate(-1);
     }
   };
