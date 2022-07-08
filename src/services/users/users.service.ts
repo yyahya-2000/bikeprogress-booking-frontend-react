@@ -68,6 +68,7 @@ class UsersService {
       params.append('id', id);
 
       const result = await axios.post(userApiUrlS.userById, params);
+
       if (result.status !== 200) {
         return console.log('result', result);
       }
@@ -78,6 +79,21 @@ class UsersService {
       console.log(error);
     } finally {
       runInAction(() => (this.previewLoading = true));
+    }
+  }
+
+  async deleteUserById(id: string) {
+    try {
+      const params = new FormData();
+      params.append('id', id);
+
+      const result = await axios.post(userApiUrlS.deleteUser, params);
+
+      if (result.status !== 200) {
+        return console.log('result', result);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -135,10 +151,9 @@ class UsersService {
       params.append('id', id);
       params.append('firstname', firstname);
       params.append('lastname', lastname);
-      params.append('phone-number', phoneNumber);
+      params.append('phone_number', phoneNumber);
       params.append('email', email);
       params.append('position', position === 0 ? 'Менеджер' : 'Администратор');
-      console.log(id, firstname, lastname, phoneNumber, email, position);
 
       const result = await axios.post(userApiUrlS.editUser, params);
       console.log(result);
