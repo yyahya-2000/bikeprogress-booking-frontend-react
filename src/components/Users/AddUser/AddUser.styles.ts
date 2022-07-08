@@ -15,6 +15,9 @@ const useAddUserStyle = makeStyles((theme: Theme) => ({
   saveBtn: {
     minWidth: '200px',
   },
+  goBackBtn: {
+    marginLeft: '-20px',
+  },
 }));
 
 export default useAddUserStyle;

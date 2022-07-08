@@ -85,7 +85,6 @@ const AddUserPage: FC = () => {
   };
 
   const onSubmit = (data: IAddUserState) => {
-    console.log(data);
     usersService.addUser(
       data.firstname,
       data.lastname,
@@ -115,7 +114,11 @@ const AddUserPage: FC = () => {
   return (
     <DrawerContainer>
       <Box>
-        <Button variant='text' onClick={() => navigate(-1)}>
+        <Button
+          className={classes.goBackBtn}
+          variant='text'
+          onClick={() => navigate(-1)}
+        >
           {'< НАЗАД'}
         </Button>
       </Box>
@@ -226,6 +229,9 @@ const AddUserPage: FC = () => {
                 type={showPassword ? 'text' : 'password'}
                 error={errors.password ? true : false}
                 value={randomPassword}
+                onInput={(e) =>
+                  setRandomPassword((e.target as HTMLInputElement).value)
+                }
                 endAdornment={
                   <InputAdornment position='end'>
                     <IconButton
