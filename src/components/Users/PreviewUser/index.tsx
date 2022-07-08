@@ -26,7 +26,10 @@ const PreviewUserPage: FC = () => {
   const deleteUser = useCallback(
     () => () => {
       setTimeout(() => {
-        console.log('deleted');
+        if (idUser) {
+          usersService.deleteUserById(idUser);
+          navigate(-1);
+        }
       });
     },
     []
@@ -117,7 +120,9 @@ const PreviewUserPage: FC = () => {
               </Button>
               <Button
                 className={`${classes.UnsetTextTrans}  ${classes.blackColor}`}
-                onClick={() => navigate(routes.adminChangePassword + `?id=${previewUser.id}`)}
+                onClick={() =>
+                  navigate(routes.adminChangePassword + `?id=${previewUser.id}`)
+                }
               >
                 Сменить пароль
               </Button>
