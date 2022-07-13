@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { UserItem, UsersTable } from 'models/types';
 import { defaultUser, userApiUrlS } from './users.data';
 //import { format } from "date-fns";
@@ -13,6 +13,10 @@ class UsersService {
   public error: string | undefined = undefined;
   public previewUser: UserItem = defaultUser;
   public previewLoading = false;
+  public addUserError: String[] = [];
+  public isAddUserDone = false;
+  public isEditUserDone = false;
+  public editUserError: String[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -106,6 +110,11 @@ class UsersService {
     password: string
   ) {
     try {
+      runInAction(() => {
+        this.isAddUserDone = false;
+        this.addUserError = [];
+      });
+
       const params = new FormData();
       params.append('firstname', firstname);
       params.append('lastname', lastname);
@@ -118,8 +127,20 @@ class UsersService {
       if (result.status !== 200) {
         return console.log('result', result);
       }
-    } catch (error) {
+    } catch (error: AxiosError | any) {
+      if (error.response.status === 422) {
+        runInAction(() => {
+          if (error.response.data.email) {
+            this.addUserError.push('Электронная почта уже была использована');
+          }
+          if (error.response.data.phone_number) {
+            this.addUserError.push('Номер телефон уже был использован');
+          }
+        });
+      }
       console.log(error);
+    } finally {
+      runInAction(() => (this.isAddUserDone = true));
     }
   }
 
@@ -147,6 +168,11 @@ class UsersService {
     position: number
   ) {
     try {
+      runInAction(() => {
+        this.isEditUserDone = false;
+        this.editUserError = [];
+      });
+
       const params = new FormData();
       params.append('id', id);
       params.append('firstname', firstname);
@@ -156,17 +182,42 @@ class UsersService {
       params.append('position', position === 0 ? 'Менеджер' : 'Администратор');
 
       const result = await axios.post(userApiUrlS.editUser, params);
-      console.log(result);
       if (result.status !== 200) {
         return console.log('result', result);
       }
-    } catch (error) {
+    } catch (error: AxiosError | any) {
+      if (error.response.status === 422) {
+        runInAction(() => {
+          if (error.response.data.email) {
+            this.editUserError.push('Электронная почта уже была использована');
+          }
+          if (error.response.data.phone_number) {
+            this.editUserError.push('Номер телефон уже был использован');
+          }
+        });
+      }
       console.log(error);
+    } finally {
+      runInAction(() => (this.isEditUserDone = true));
     }
   }
 
   resetParams() {
     runInAction(() => (this.isCallDone = false));
+  }
+
+  resetAddUserParams() {
+    runInAction(() => {
+      this.addUserError = [];
+      this.isAddUserDone = false;
+    });
+  }
+
+  resetEditUserParams() {
+    runInAction(() => {
+      this.editUserError = [];
+      this.isEditUserDone = false;
+    });
   }
 }
 

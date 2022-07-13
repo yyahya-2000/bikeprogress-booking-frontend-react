@@ -31,6 +31,8 @@ const UsersPage: FC = () => {
   const [rows, setRows] = useState<UsersTable[]>([]);
   useEffect(() => {
     usersService.fetchAllUsers();
+    usersService.resetAddUserParams();
+    usersService.resetEditUserParams();
   }, []);
 
   useEffect(() => {

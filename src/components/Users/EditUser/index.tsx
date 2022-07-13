@@ -28,7 +28,8 @@ const EditUserPage: FC = () => {
   const classes = useEditUserStyle();
   const navigate = useNavigate();
   const idUser = getParameterFromUrl('id');
-  const { previewUser, previewLoading } = usersService;
+  const { previewUser, previewLoading, isEditUserDone, editUserError } =
+    usersService;
 
   const validationSchema = object().shape({
     firstname: string().required('Имя обязателно'),
@@ -68,9 +69,15 @@ const EditUserPage: FC = () => {
         data.position
       );
       usersService.fetchUserById(idUser);
-      navigate(-1);
     }
   };
+
+  useEffect(() => {
+    if (isEditUserDone && editUserError.length === 0) {
+      navigate(-1);
+    }
+  }, [isEditUserDone]);
+
   if (!previewLoading) {
     return (
       <DrawerContainer>
@@ -187,6 +194,13 @@ const EditUserPage: FC = () => {
             </FormControl>
           </Grid>
         </Grid>
+        {editUserError ? (
+          <Grid mt={3} color='red'>
+            {editUserError.map((element, index) => (
+              <Box key={index}>{element}</Box>
+            ))}
+          </Grid>
+        ) : null}
         <Grid mt={15}>
           <Button
             className={`${classes.UnsetTextTrans}  ${classes.saveBtn}`}

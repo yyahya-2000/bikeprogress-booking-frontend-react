@@ -15,7 +15,7 @@ import {
 import DrawerContainer from 'components/common/Drawer';
 import { authValidations } from 'enums/authorization';
 import { IAddUserState } from 'models/interfaces';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { object, ref, string } from 'yup';
@@ -23,6 +23,7 @@ import useAddUserStyle from './AddUser.styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { usersService } from 'services/users/users.service';
+import { observer } from 'mobx-react-lite';
 
 const AddUserPage: FC = () => {
   const classes = useAddUserStyle();
@@ -31,6 +32,8 @@ const AddUserPage: FC = () => {
   const [randomPassword, setRandomPassword] = useState('');
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
     useState(false);
+  const { addUserError, isAddUserDone } = usersService;
+
   const validationSchema = object().shape({
     firstname: string().required('Имя обязателно'),
     lastname: string().required('Фамилия обязателно'),
@@ -93,8 +96,13 @@ const AddUserPage: FC = () => {
       data.position,
       data.password
     );
-    navigate(-1);
   };
+
+  useEffect(() => {
+    if (isAddUserDone && addUserError.length === 0) {
+      navigate(-1);
+    }
+  }, [isAddUserDone]);
 
   const generatePassword = (
     length = Math.floor(Math.random() * (8 - 6 + 1)) + 6,
@@ -294,6 +302,13 @@ const AddUserPage: FC = () => {
             </FormControl>
           </Grid>
         </Grid>
+        {addUserError ? (
+          <Grid mt={3} color='red'>
+            {addUserError.map((element, index) => (
+              <Box key={index}>{element}</Box>
+            ))}
+          </Grid>
+        ) : null}
         <Grid mt={15}>
           <Button
             className={classes.saveBtn}
@@ -313,4 +328,4 @@ const AddUserPage: FC = () => {
   );
 };
 
-export default AddUserPage;
+export default observer(AddUserPage);
