@@ -68,6 +68,14 @@ class UsersService {
   async fetchUserById(id: string) {
     try {
       runInAction(() => (this.previewLoading = false));
+      if ( id === '-1')
+      {
+        runInAction(() => {
+          this.previewUser = this.currentUser;
+          this.previewLoading = true;
+        });
+        return;
+      }
       const params = new FormData();
       params.append('id', id);
 
@@ -199,6 +207,17 @@ class UsersService {
       console.log(error);
     } finally {
       runInAction(() => (this.isEditUserDone = true));
+    }
+  }
+  async logout() {
+    try {
+      const result = await axios.post(userApiUrlS.logout);
+      console.log(result);
+      if (result.status !== 200) {
+        return console.log('result', result);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

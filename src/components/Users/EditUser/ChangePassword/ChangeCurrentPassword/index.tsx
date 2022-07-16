@@ -15,7 +15,6 @@ import {
   InputLabel,
   Typography,
 } from '@mui/material';
-import useChangePasswordStyle from './ChangePassword.styles';
 import { object, ref, string } from 'yup';
 import { authValidations } from 'enums/authorization';
 import { useForm } from 'react-hook-form';
@@ -23,9 +22,9 @@ import { IAdminChangePasswordState } from 'models/interfaces';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { usersService } from 'services/users/users.service';
 import { observer } from 'mobx-react-lite';
-import ChangeCurrentPassword from 'views/Users/EditUser/ChangePassword/ChangeCurrentPassword';
+import useChangePasswordStyle from '../ChangePassword.styles';
 
-const AdminChangePasswordPage: FC = () => {
+const ChangeCurrentPasswordPage: FC = () => {
   const navigate = useNavigate();
   const classes = useChangePasswordStyle();
   const idUser = getParameterFromUrl('id');
@@ -97,10 +96,6 @@ const AdminChangePasswordPage: FC = () => {
       setRandomPassword(password);
     }
   };
-
-  if (currentUser.id == idUser) {
-    return <ChangeCurrentPassword />;
-  }
 
   return (
     <DrawerContainer>
@@ -225,4 +220,4 @@ const AdminChangePasswordPage: FC = () => {
   );
 };
 
-export default observer(AdminChangePasswordPage);
+export default observer(ChangeCurrentPasswordPage);

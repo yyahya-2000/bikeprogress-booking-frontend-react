@@ -19,10 +19,14 @@ import { FC, useState } from 'react';
 import useDrawerContainerStyle from './DrawerContainer.styles';
 import { companyName } from 'enums';
 import { menuItems } from './Drawer.data';
-import { useMediaQuery } from '@mui/material';
+import { Avatar, Button, Grid, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { usersService } from 'services/users/users.service';
 import { observer } from 'mobx-react-lite';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { withCookies, Cookies } from 'react-cookie';
+import { routes } from 'routers';
+// import { routes } from 'routers';
 
 const drawerWidth = 240;
 
@@ -97,6 +101,8 @@ const Drawer = styled(MuiDrawer, {
 
 const DrawerContainer: FC<ContainerProps> = ({ children }) => {
   const { currentUser } = usersService;
+  const cookies = new Cookies();
+  //const [cookies, setCookie, removeCookie] = useCookies(['laravel_session']);
   // const [menuListItems, setMenuListItems] = useState<MenuItem[]>([]);
   const classes = useDrawerContainerStyle();
   const theme = useTheme();
@@ -120,15 +126,51 @@ const DrawerContainer: FC<ContainerProps> = ({ children }) => {
     setOpen(false);
   };
 
+  const logoutHandler = () => {
+    // document.cookie.split(";").forEach((c) => {
+    //   document.cookie = c
+    //     .replace(/^ +/, "")
+    //     .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    // });
+
+    // var cookies = document.cookie.split(";");
+
+    // for (var i = 0; i < cookies.length; i++) {
+    //     var cookie = cookies[i];
+    //     var eqPos = cookie.indexOf("=");
+    //     var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    //     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    // }
+
+    // console.log(cookies.getAll());
+    // cookies.remove('laravel_session', { path: '/', domain: 'localhost' });
+    // cookies.remove('jwt', { path: '/', domain: 'localhost' });
+    // cookies.remove('XSRF-TOKEN', { path: '/', domain: 'localhost' });
+    // console.log(cookies.getAll());
+    // localStorage.removeItem('localhost');
+    
+
+    //setCookie("laravel_session", "", { path: "/" });
+    //removeCookie('laravel_session', { path: "/" });
+    //(new Cookies()).remove('laravel_session');
+    usersService.logout();
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
 
       <Drawer variant='permanent' open={open} className={classes.sidbar}>
-        <DrawerHeader style={{justifyContent: 'space-between'}}>
+        <DrawerHeader style={{ justifyContent: 'space-between' }}>
           {open ? (
             <>
-              <Typography ml={2} className={classes.whiteColor} variant='h5' noWrap component='div'>
+              <Typography
+                ml={2}
+                className={classes.whiteColor}
+                variant='h5'
+                noWrap
+                component='div'
+              >
                 {companyName}
               </Typography>
               <IconButton
@@ -190,6 +232,33 @@ const DrawerContainer: FC<ContainerProps> = ({ children }) => {
             </ListItem>
           ))}
         </List>
+        <Box position='absolute' bottom={20} left={13}>
+          <Grid display='flex' alignItems='center'>
+            <Avatar />
+            <Grid ml={1}>
+              <Button
+                className={classes.whiteColor}
+                style={{ textDecoration: 'underline' }}
+                variant='text'
+                onClick={()=>navigate(routes.previewUser + `?id=${-1}`)}
+              >
+                {currentUser?.lastname.charAt(0).toUpperCase() +
+                  currentUser?.lastname.slice(1).toLowerCase() +
+                  ' ' +
+                  currentUser?.lastname.charAt(0).toUpperCase() +
+                  '.'}
+              </Button>
+            </Grid>
+          </Grid>
+          <Button
+            className={classes.whiteColor}
+            variant='text'
+            onClick={logoutHandler}
+          >
+            <LogoutOutlinedIcon />
+            <Grid ml={3}>{'Выйти'}</Grid>
+          </Button>
+        </Box>
       </Drawer>
       <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
         {children}
@@ -198,4 +267,4 @@ const DrawerContainer: FC<ContainerProps> = ({ children }) => {
   );
 };
 
-export default observer(DrawerContainer);
+export default withCookies(observer(DrawerContainer));

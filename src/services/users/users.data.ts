@@ -20,5 +20,6 @@ export const userApiUrlS = {
   userById: getOrigin() + 'api/user/read',
   adminResetPassword: getOrigin() + 'api/user/edit/admin-reset-password',
   editUser: getOrigin() + 'api/user/edit',
-  deleteUser: getOrigin() + 'api/user/delete'
+  deleteUser: getOrigin() + 'api/user/delete',
+  logout: getOrigin() + 'api/logout'
 };

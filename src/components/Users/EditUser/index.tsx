@@ -28,7 +28,7 @@ const EditUserPage: FC = () => {
   const classes = useEditUserStyle();
   const navigate = useNavigate();
   const idUser = getParameterFromUrl('id');
-  const { previewUser, previewLoading, isEditUserDone, editUserError } =
+  const { currentUser ,previewUser, previewLoading, isEditUserDone, editUserError } =
     usersService;
 
   const validationSchema = object().shape({
@@ -178,21 +178,25 @@ const EditUserPage: FC = () => {
               </FormHelperText>
             </FormControl>
           </Grid>
-          <Grid mt={2} item>
-            <FormControl variant='standard' sx={{ minWidth: 120 }}>
-              <InputLabel id='position-select-label'>Допуск</InputLabel>
-              <Select
-                labelId='position-select-label'
-                id='position-select'
-                {...register('position')}
-                label='Допуск'
-                defaultValue={previewUser.position === 'Администратор' ? 1 : 0}
-              >
-                <MenuItem value={0}>Менеджер</MenuItem>
-                <MenuItem value={1}>Администратор</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+          {currentUser.id !== previewUser.id ? (
+            <Grid mt={2} item>
+              <FormControl variant='standard' sx={{ minWidth: 120 }}>
+                <InputLabel id='position-select-label'>Допуск</InputLabel>
+                <Select
+                  labelId='position-select-label'
+                  id='position-select'
+                  {...register('position')}
+                  label='Допуск'
+                  defaultValue={
+                    previewUser.position === 'Администратор' ? 1 : 0
+                  }
+                >
+                  <MenuItem value={0}>Менеджер</MenuItem>
+                  <MenuItem value={1}>Администратор</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          ) : null}
         </Grid>
         {editUserError ? (
           <Grid mt={3} color='red'>

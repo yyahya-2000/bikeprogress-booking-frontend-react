@@ -14,7 +14,7 @@ const PreviewUserPage: FC = () => {
   const classes = usePreviewUserStyle();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const idUser = getParameterFromUrl('id');
-  const { previewUser, previewLoading } = usersService;
+  const { currentUser, previewUser, previewLoading } = usersService;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const PreviewUserPage: FC = () => {
                 {previewUser.lastname.charAt(0).toUpperCase() +
                   previewUser.lastname.slice(1).toLowerCase() +
                   ' ' +
-                  previewUser.lastname.charAt(0).toUpperCase() +
+                  previewUser.firstname.charAt(0).toUpperCase() +
                   '.'}
               </Typography>
               <Grid container>
@@ -126,12 +126,14 @@ const PreviewUserPage: FC = () => {
               >
                 Сменить пароль
               </Button>
-              <Button
-                className={`${classes.UnsetTextTrans}  ${classes.blackColor}`}
-                onClick={() => setIsDialogOpen(true)}
-              >
-                Удалить пользователя
-              </Button>
+              {currentUser.id !== previewUser.id ? (
+                <Button
+                  className={`${classes.UnsetTextTrans}  ${classes.blackColor}`}
+                  onClick={() => setIsDialogOpen(true)}
+                >
+                  Удалить пользователя
+                </Button>
+              ) : null}
             </Grid>
           </Grid>
         </DrawerContainer>
