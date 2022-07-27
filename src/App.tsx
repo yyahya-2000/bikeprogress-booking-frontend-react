@@ -13,6 +13,10 @@ import AddUser from 'views/Users/AddUser';
 import EditUser from 'views/Users/EditUser';
 import PreviewUser from 'views/Users/PreviewUser';
 import AdminChangePassword from 'views/Users/EditUser/ChangePassword';
+import Contacts from 'views/Contacts';
+import AddContact from 'views/Contacts/AddContact';
+import EditContact from 'views/Contacts/EditContact';
+import PreviewContact from 'views/Contacts/PreviewContact';
 
 const App: FC = () => {
   const isNonScreen = useMediaQuery('(max-width:319px)');
@@ -69,6 +73,38 @@ const App: FC = () => {
           element={
             <PrivateRoute>
               <PreviewUser />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.contacts}
+          element={
+            <PrivateRoute>
+              <Contacts />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.addContact}
+          element={
+            <PrivateRoute>
+              <AddContact />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.editContact}
+          element={
+            <PrivateRoute>
+              <EditContact />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={routes.previewContact}
+          element={
+            <PrivateRoute>
+              <PreviewContact />
             </PrivateRoute>
           }
         />
