@@ -29,4 +29,11 @@ export const authValidations: AuthValidations = {
     },
   },
   errorAnswer: 'Неправильный логин или пароль',
+  extraPhoneNumber: {
+    pattern: {
+      regex:
+        /^(\s*|(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2})$/,
+      invalidMessage: 'Номер телефона недействителен',
+    },
+  },
 };

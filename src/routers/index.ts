@@ -1,7 +1,6 @@
 export const routes = {
   home: '/',
   login: '/login',
-  contacts: '/contacts',
   users: '/users',
   page: '/page',
   help: '/help',
@@ -9,4 +8,8 @@ export const routes = {
   previewUser: '/users/view',
   addUser: '/users/add',
   adminChangePassword: '/users/edit/change-password',
+  contacts: '/contacts',
+  addContact: '/contacts/add',
+  editContact: '/contacts/edit',
+  previewContact: '/contacts/view',
 };
