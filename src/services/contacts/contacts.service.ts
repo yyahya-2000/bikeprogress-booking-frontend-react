@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import axios, { AxiosError } from 'axios';
 import { ContactItem, ContactTableItem } from 'models/types';
-import { contactApiUrls } from './contacts.data';
+import { contactApiUrls, defaultContact } from './contacts.data';
 
 class ContactsService {
   public contacts: ContactItem[] | undefined = undefined;
@@ -9,6 +9,8 @@ class ContactsService {
   public isCallDone = false;
   public error: string | undefined = undefined;
   public isAddContactDone = false;
+  public previewContact: ContactItem = defaultContact;
+  public previewLoading = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -112,6 +114,27 @@ class ContactsService {
       console.log(error);
     } finally {
       runInAction(() => (this.isAddContactDone = true));
+    }
+  }
+
+  async fetchContactById(id: string) {
+    try {
+      runInAction(() => (this.previewLoading = false));
+      const params = new FormData();
+      params.append('id', id);
+
+      const result = await axios.post(contactApiUrls.ContactById, params);
+
+      if (result.status !== 200) {
+        return console.log('result', result);
+      }
+      runInAction(() => {
+        this.previewContact = result.data[0];
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      runInAction(() => (this.previewLoading = true));
     }
   }
 }
